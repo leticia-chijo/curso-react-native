@@ -1,5 +1,5 @@
 import { Text, View } from "react-native"
-import { styles } from "../../styles/styles"
+import { styles } from "../../../styles/styles"
 import { useLocalSearchParams } from "expo-router"
 
 export default function ProductDetail() {
