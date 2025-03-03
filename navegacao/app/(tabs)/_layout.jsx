@@ -1,4 +1,5 @@
 import { FontAwesome } from "@expo/vector-icons"
+import { DrawerToggleButton } from "@react-navigation/drawer"
 import { Tabs } from "expo-router"
 
 export default function TabsLayout() {
@@ -8,7 +9,8 @@ export default function TabsLayout() {
         headerStyle: { backgroundColor: "#E94560" },
         headerTintColor: "#FFFFFF",
         tabBarActiveTintColor: "#E94560",
-        tabBarInactiveTintColor: "gray"
+        tabBarInactiveTintColor: "gray",
+        headerRight: () => <DrawerToggleButton tintColor="#FFFFFF" />
       }}
     >
       <Tabs.Screen
