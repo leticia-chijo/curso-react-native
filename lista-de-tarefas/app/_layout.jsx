@@ -12,6 +12,7 @@ import { colors } from "../constants/colors"
 import Task from "../components/Task"
 import { useState } from "react"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
+import { SafeAreaView } from "react-native-safe-area-context"
 
 const initialTasks = [
   { id: 1, completed: true, text: "Fazer café" },
@@ -31,14 +32,18 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView>
-      <View style={style.mainContainer}>
+      <SafeAreaView style={style.mainContainer}>
         <View style={style.rowContainer}>
           <Image source={logo} style={style.image} />
           <Text style={style.title}>Minhas Tarefas</Text>
         </View>
 
         <View style={style.rowContainer}>
-          <TextInput value={text} onChangeText={setText} style={style.input} />
+          <TextInput 
+            value={text} 
+            onChangeText={setText} 
+            style={style.input}
+          />
           <Pressable
             onPress={addTask}
             style={({ pressed }) => [
@@ -61,7 +66,7 @@ export default function RootLayout() {
             />
           )}
         />
-      </View>
+      </SafeAreaView>
     </GestureHandlerRootView>
   )
 }
