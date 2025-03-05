@@ -10,19 +10,47 @@ import {
 import logo from "../assets/images/check.png"
 import { colors } from "../constants/colors"
 import Task from "../components/Task"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { SafeAreaView } from "react-native-safe-area-context"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
-const initialTasks = [
-  { id: 1, completed: true, text: "Fazer café" },
-  { id: 2, completed: false, text: "Estudar React Native" },
-  { id: 3, completed: false, text: "Academia" }
-]
+// const initialTasks = [
+//   { id: 1, completed: true, text: "Fazer café" },
+//   { id: 2, completed: false, text: "Estudar React Native" },
+//   { id: 3, completed: false, text: "Academia" }
+// ]
 
 export default function RootLayout() {
-  const [tasks, setTasks] = useState(initialTasks)
+  const [tasks, setTasks] = useState([])
   const [text, setText] = useState("")
+
+  useEffect(() => {
+    getTasksAsyncStorage = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem("tasks")
+        if (jsonValue !== null) {
+          setTasks(JSON.parse(jsonValue))
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    getTasksAsyncStorage()
+  }, [])
+
+  useEffect(() => {
+    setTasksAsyncStorage = async () => {
+      try {
+        const jsonValue = JSON.stringify(tasks)
+        await AsyncStorage.setItem("tasks", jsonValue)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    setTasksAsyncStorage()
+  }, [tasks])
 
   const addTask = () => {
     const newTask = { id: tasks.length + 1, completed: false, text }
@@ -39,11 +67,7 @@ export default function RootLayout() {
         </View>
 
         <View style={style.rowContainer}>
-          <TextInput 
-            value={text} 
-            onChangeText={setText} 
-            style={style.input}
-          />
+          <TextInput value={text} onChangeText={setText} style={style.input} />
           <Pressable
             onPress={addTask}
             style={({ pressed }) => [
