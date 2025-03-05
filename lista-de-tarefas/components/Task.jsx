@@ -4,7 +4,7 @@ import { colors } from "../constants/colors"
 import { useState } from "react"
 import { Directions, FlingGestureHandler, State } from "react-native-gesture-handler"
 
-export default function Task({ text, initialCompleted, deleteTask }) {
+export default function Task({ text, initialCompleted, deleteTask, toggleTask }) {
   const [completed, setCompleted] = useState(initialCompleted)
   const swipe = new Animated.Value(0)
 
@@ -17,6 +17,11 @@ export default function Task({ text, initialCompleted, deleteTask }) {
     }
   }
 
+  const handleToggle = () => {
+    setCompleted(!completed)
+    toggleTask()
+  }
+
   return (
     <FlingGestureHandler direction={Directions.RIGHT} onHandlerStateChange={handleFling}>
       <Animated.View style={[style.rowContainer, { transform: [{ translateX: swipe }] }]}>
@@ -24,7 +29,7 @@ export default function Task({ text, initialCompleted, deleteTask }) {
           name="checkmark-circle"
           size={32}
           color={completed ? colors.primary : "gray"}
-          onPress={() => setCompleted(!completed)}
+          onPress={handleToggle}
         />
         <Text>{text}</Text>
       </Animated.View>

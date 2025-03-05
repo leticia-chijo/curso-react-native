@@ -87,6 +87,13 @@ export default function RootLayout() {
               text={item.text}
               initialCompleted={item.completed}
               deleteTask={() => setTasks(tasks.filter((t) => t.id !== item.id))}
+              toggleTask={() =>
+                setTasks(
+                  tasks.map((t) =>
+                    t.id === item.id ? { ...t, completed: !t.completed } : { ...t }
+                  )
+                )
+              }
             />
           )}
         />
