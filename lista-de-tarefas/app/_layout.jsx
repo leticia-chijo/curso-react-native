@@ -1,7 +1,7 @@
 import {
   FlatList,
   Image,
-  Pressable,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -14,6 +14,7 @@ import { useEffect, useState } from "react"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { SafeAreaView } from "react-native-safe-area-context"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import Button from "../components/Button"
 
 // const initialTasks = [
 //   { id: 1, completed: true, text: "Fazer café" },
@@ -68,15 +69,7 @@ export default function RootLayout() {
 
         <View style={style.rowContainer}>
           <TextInput value={text} onChangeText={setText} style={style.input} />
-          <Pressable
-            onPress={addTask}
-            style={({ pressed }) => [
-              style.button,
-              { backgroundColor: pressed ? "blue" : colors.primary }
-            ]}
-          >
-            <Text style={style.buttonText}>+</Text>
-          </Pressable>
+          <Button addTask={addTask}/>
         </View>
 
         <FlatList
@@ -97,6 +90,10 @@ export default function RootLayout() {
             />
           )}
         />
+
+        {Platform.OS === "ios" && <Text>Executando no iOS</Text>}
+        {Platform.OS === "android" && <Text>Executando no Android</Text>}
+        {Platform.OS === "web" && <Text>Executando na web</Text>}
       </SafeAreaView>
     </GestureHandlerRootView>
   )
@@ -120,19 +117,6 @@ const style = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 20,
     flexGrow: 1
-  },
-  button: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: colors.primary,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 20
   },
   mainContainer: {
     margin: 20
